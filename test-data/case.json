@@ -1,0 +1,10 @@
+{
+    "Case":{
+        "contact":"New contact",
+        "account":"New account",
+        "status":"New",
+        "caseOrgin":"Email",
+        "subject":"Product Return Request",
+        "description":"Requesting a return for a defective product"
+    }
+}
