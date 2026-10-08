@@ -38,10 +38,11 @@ export class LeadsPage{
         await this.page.getByRole('textbox', { name: 'Company' }).fill(leads.Lead1.company);
         await this.page.getByRole('button', { name: 'Save', exact: true }).click();
         await this.page.waitForLoadState("domcontentloaded");
-        await expect(this.page.locator('[name="primaryField"]')).toContainText(leads.Lead1.firstName)
         const confirmation = this.page.locator('[data-aura-class="forceToastMessage"]');
         await expect(confirmation).toBeVisible({ timeout: 30000 });
         console.log(await confirmation.innerText());
+        await expect(this.page.locator('[name="primaryField"]')).toContainText(leads.Lead1.firstName)
+        
         
        
     }

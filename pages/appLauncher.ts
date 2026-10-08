@@ -12,9 +12,7 @@ export class appLaunch{
 
     }
 
-    //Method to open a app page from the app Launcher screen
-    async openApp(app:string){
-           
+    async openAppLauncher(){
         console.log("app launch",await this.page.title());
         
         await this.page.getByTitle('App Launcher').click();
@@ -23,11 +21,26 @@ export class appLaunch{
        
         await this.page.getByLabel('View All Applications').click();
 
-        const appLaunchDiv= this.page.locator('//div[@aria-label="App Launcher"]')
-        const searchBox = this.page.getByPlaceholder("Search apps or items...");
+        
+    }
+
+    async search(name:string){
+         const searchBox = this.page.getByPlaceholder("Search apps or items...");
 
         await this.page.waitForLoadState("domcontentloaded")
-        await searchBox.fill(app);
+        await searchBox.fill(name);
+
+    }
+
+    //Method to open a app page from the app Launcher screen
+    async openApp(app:string){
+           
+       this.openAppLauncher()
+
+       this.search(app)
+
+        //const appLaunchDiv= this.page.locator('//div[@aria-label="App Launcher"]')
+       
 
         const appResult = this.page.locator(`[data-name="${app}"]`).first();
 
@@ -39,18 +52,35 @@ export class appLaunch{
 
         await appResult.click();
 
-        
+       
+                  
+    }
 
+    //Method to open a item  from the app Launcher screen
+    async openItem(app:string){
+           
+       this.openAppLauncher()
 
-        /* 
-        
-        await expect(appLaunchDiv.getByText(app).first()).toBeVisible({  timeout: 30000});
+       this.search(app)
 
-        console.log(await appLaunchDiv.filter({hasText:app}).first().innerText());
-        
-        await appLaunchDiv.filter({hasText:app}).first().click() */
-       // await appLaunchDiv.getByText(app).nth(0).click()
-        //await expect(this.page.getByTitle(app)).toBeVisible()
+       console.log(`-------Opening ${app}---------`);
+       
+
+       const ItemArea =  this.page.getByRole('button',{name: "All Items"})
+       if(await ItemArea.getAttribute("aria-expanded") === 'false'){
+            ItemArea.click()
+        }
+
+       const appResult = this.page.locator(`[data-label="${app}"]`).first();
+
+        await expect(appResult).not.toBeHidden({
+            timeout: 30000
+        });
+        //console.log("Visible:", await appResult.isVisible());
+        //console.log("Count:", await appResult.count());
+
+        await appResult.click();
+
        
                   
     }
