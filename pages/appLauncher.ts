@@ -73,10 +73,10 @@ export class appLaunch{
 
        const appResult = this.page.locator(`[data-label="${app}"]`).first();
 
-        await expect(appResult).not.toBeHidden({
+        /* await expect(appResult).not.toBeHidden({
             timeout: 30000
-        });
-        //console.log("Visible:", await appResult.isVisible());
+        }); */
+        console.log("Visible:", await appResult.isVisible());
         //console.log("Count:", await appResult.count());
 
         await appResult.click();

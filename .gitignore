@@ -4,3 +4,4 @@ test-results/
 .env
 *.env
 test-data/salesforce.json
+test-data/apiClient.json

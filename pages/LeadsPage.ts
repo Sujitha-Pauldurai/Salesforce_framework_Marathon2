@@ -65,6 +65,33 @@ export class LeadsPage{
 
     }
 
+    //Search a lead using the searchBox
+    async search_Delete_Lead(leadValue:string){
+
+        //Search Lead
+        await this.page.getByRole('button',{name:'Search'}).click()
+        await this.page.locator('[placeholder="Search..."]').fill(leadValue)
+        //await this.page.locator('[placeholder="Search..."]').press("Enter")
+
+        await  expect(this.page.locator(`//div[@class="instant-results-list"]//div[contains(@class,"instant-result-item__content")]/span[contains(@title,"${leadValue}")]`).nth(1)).toBeVisible()
+
+        await this.page.locator(`//div[@class="instant-results-list"]//div[contains(@class,"instant-result-item__content")]/span[contains(@title,"${leadValue}")]`).nth(1).click()
+        await this.page.waitForLoadState("domcontentloaded")
+        //Delete Lead
+        await expect(this.page.getByRole('button', { name: 'Show more actions' })).toBeVisible({ timeout: 30000 });
+        const moreOption = this.page.getByRole('button',{name: "Show more actions"})
+        await moreOption.click()
+        console.log(await this.page.getByRole('menuitem', { name: 'Delete' }).isVisible({timeout:30000}));
+        await this.page.getByRole('menuitem', { name: 'Delete' }).click()
+        await this.page.getByRole('button',{name:'Delete'}).click()   
+        const toastMsg = await this.page.locator('[data-aura-class="forceActionsText"]')
+        await expect(toastMsg).toBeVisible()
+        console.log(await toastMsg.innerText());
+        expect(await toastMsg.innerText()).toContain("was deleted")    
+        
+
+    }
+
 
 
 }

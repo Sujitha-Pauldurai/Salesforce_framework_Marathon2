@@ -1,13 +1,14 @@
-import { test as setup } from "@playwright/test";
-import { LoginPage } from "../../pages/loginPage";
+//import { test as setup } from "@playwright/test";
 
-setup("Login and save storage state", async ({ page }) => {
+import {test as setup} from "../../utils/customFixture"
+
+setup("Login and save storage state", async ({ loginFix,page }) => {
 
     await page.goto("/");
 
-    const loginPage = new LoginPage(page);
+    //const loginPage = new LoginPage(page);
 
-    await loginPage.login();
+    await loginFix.login();
 
     // Enter OTP manually
     await page.pause();

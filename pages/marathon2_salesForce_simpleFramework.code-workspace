@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../playwright"
+		},
+		{
+			"path": "../../playwright_MCP_leatleaf"
+		}
+	],
+	"settings": {}
+}
